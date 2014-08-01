@@ -63,27 +63,29 @@ A bit of a disclaimer: Some of the things I mention below may not be totally cor
 <li>On the compute node, if you are missing the chain neutron-openvswi-sg-chain, rules for the tap interface (and a load of others), then you need to <code>service neutron-openvswitch-agent restart</code>. More than likely you will also need to <code>service openstack-nova-compute restart</code> as well.</li>
 <li>On the network node it is a similar thing if you are missing the neutron-openvswi-sg-chain (plus a bunch of others), you need to <code>service neutron-openvswitch-restart</code>.</li>
 <li>Check that iptables is also setup correctly for the router on the network node. Run <code>ip netns</code> to list the namespaces and then check <code>ip netns exec qrouter-<UUID> iptables -S</code>. If you are missing rules for neutron-l3-agent-BLAH then you need to <code>service neutron-l3-agent restart</code>. If you are missing rules for neutron-vpn-agen-BLAH then you need to <code>service neutron-vpn-agent restart</code>
-<li>If you create an instance and it does not appear to get an ip address, there are two most likely causes: 1. DHCP discovery messages are not making their way to the DHCP server, or 2. DHCP offers are not getting back from the DHCP server to the instance. The way to determine on which side the problem is, is to run <code>tcpdump -i br-int -vvv -s 1500 '((port 67 or port 68) and (udp[8:1] = 0x1))'</code> which checks for all DHCP-packets on the br-int integration bridge interface. Run this on both the compute node and the network node at the time the instance is trying to send the discovery message (to see when the instance is doing this look for "Sending discover..." in the instance console log).<li>
+<li>If you create an instance and it does not appear to get an ip address, there are two most likely causes: 1. DHCP discovery messages are not making their way to the DHCP server, or 2. DHCP offers are not getting back from the DHCP server to the instance. The way to determine on which side the problem is, is to run <code>tcpdump -i br-int -vvv -s 1500 '((port 67 or port 68) and (udp[8:1] = 0x1))'</code> which checks for all DHCP-packets on the br-int integration bridge interface. Run this on both the compute node and the network node at the time the instance is trying to send the discovery message (to see when the instance is doing this look for "Sending discover..." in the instance console log).</li>
 <li>If you are not seeing DHCP discovery messages on the br-int interface of the compute node then you should restart the openstack-nova-compute and neutron-openvswitch-agent</li>
 <li>If you are not seeing DHCP discovery messages on the br-int interface of the network node then you should restart the neutron-openvswitch-agent and neutron-l3-agent</li>
 <li>If you are not seeing DHCP offer responses on the br-int interface of the network node then you should restart the neutron-dhcp-agent</li>
-<li>If you are still having problems getting an ip address to the instance, but you've checked all the above, then you've likely hit something that I've not seen. Submit me an issue, and I'll see if I can help!<li>
+<li>If you are still having problems getting an ip address to the instance, but you've checked all the above, then you've likely hit something that I've not seen. Submit me an issue, and I'll see if I can help!</li>
 <li>If you have problems with the Horizon user interface with an error page (might be a 50x or 40x) saying "Oops something went wrong" then check to see if the rabbitmqs-server is running on the control node</li>
-<li>After allocating an external IP to the instance you should be able to log into the cirros test instance with <code>ssh cirros@192.168.22.101</code>, however you probably won't have internet access from the instance. This is because the network setup in Openstack for "external" access is actually a host-only network inside virtualbox, meaning that you need to enable ip forwarding and manually setup NAT on your host between the external ip address of the instance and the interface on your host that you access the internet on.<li>
+<li>After allocating an external IP to the instance you should be able to log into the cirros test instance with <code>ssh cirros@192.168.22.101</code>, however you probably won't have internet access from the instance. This is because the network setup in Openstack for "external" access is actually a host-only network inside virtualbox, meaning that you need to enable ip forwarding and manually setup NAT on your host between the external ip address of the instance and the interface on your host that you access the internet on.</li>
+</ol>
 
-Addional Resources
+Additional Resources
 -------------------
-Good, but a bit outdated, link to explain some of the typical problems you can envounter with Openstack networking
-http://docs.openstack.org/openstack-ops/content/network_troubleshooting.html
-Nice diagram about packet flow through iptables
-http://vinojdavis.blogspot.ie/2010/04/packet-flow-diagrams.html
-Some explanations about networking works on virtualbox
-https://blogs.oracle.com/fatbloke/entry/networking_in_virtualbox1
-Pretty good information about trying to get Openstack running on virtualbox
-https://blogs.oracle.com/ronen/entry/diving_into_openstack_network_architecture
-Indepth information about how openvswitch works that you really need to know if you're trying to debug Openstack network issues
-http://docs.openstack.org/admin-guide-cloud/content/under_the_hood_openvswitch.html
-Where I found how to setup PF and NAT on OSX for virtualbox
-https://forums.virtualbox.org/viewtopic.php?f=8&t=47959
+
+- Good, but a bit outdated, link to explain some of the typical problems you can envounter with Openstack networking
+<http://docs.openstack.org/openstack-ops/content/network_troubleshooting.html>
+- Nice diagram about packet flow through iptables
+<http://vinojdavis.blogspot.ie/2010/04/packet-flow-diagrams.html>
+- Some explanations about networking works on virtualbox
+<https://blogs.oracle.com/fatbloke/entry/networking_in_virtualbox1>
+- Pretty good information about trying to get Openstack running on virtualbox
+<https://blogs.oracle.com/ronen/entry/diving_into_openstack_network_architecture>
+- Indepth information about how openvswitch works that you really need to know if you're trying to debug Openstack network issues
+<http://docs.openstack.org/admin-guide-cloud/content/under_the_hood_openvswitch.html>
+- Where I found how to setup PF and NAT on OSX for virtualbox
+<https://forums.virtualbox.org/viewtopic.php?f=8&t=47959>
 
 ###HAPPY OPENSTACKING!
