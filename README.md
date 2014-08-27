@@ -12,6 +12,7 @@ Host machine configuration
 This project was build with the following host machine configuration:
 * OSX Mavericks (10.9.4)
 * Vagrant (1.6.2)
+* Vagrant oscar plugin (0.4.1)
 * Virtualbox (4.3.12)
 * Enable ip forwarding and setup NAT for instances to allow internat access. See below how to do this.
 
