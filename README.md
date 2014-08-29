@@ -23,7 +23,7 @@ The puppet master is available on `https://192.168.11.3`. These login details ar
 
 > pass: `puppetlabs`
 
-Openstack horizon dashboard is available on `https://192.168.11.4`. These login details are configured in the openstack.yaml hiera file.
+Openstack horizon dashboard is available on `http://192.168.11.4`. These login details are configured in the openstack.yaml hiera file.
 > user: `test`
 
 > pass: `abc123`
@@ -84,7 +84,7 @@ A bit of a disclaimer: Some of the things I mention below may not be totally cor
 Additional Resources
 -------------------
 
-- Good, but a bit outdated, link to explain some of the typical problems you can envounter with Openstack networking
+- Good, but a bit outdated, link to explain some of the typical problems you can encounter with Openstack networking
 <http://docs.openstack.org/openstack-ops/content/network_troubleshooting.html>
 - Nice diagram about packet flow through iptables
 <http://vinojdavis.blogspot.ie/2010/04/packet-flow-diagrams.html>
