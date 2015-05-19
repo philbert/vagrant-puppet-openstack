@@ -16,6 +16,22 @@ This project was build with the following host machine configuration:
 * Virtualbox (4.3.12)
 * Enable ip forwarding and setup NAT for instances to allow internat access. See below how to do this.
 
+Following vagrant plugins are required
+------------
+
+In order to spin-up setup using this vagrantfile, you need following vagrant plugins 
+
+* vagrant-pe_build (0.10.1)
+* vagrant-hosts
+
+Installation of vagrant plugin 
+------------
+
+You can install above plugins using following command
+
+> $ vagrant plugin install <plugin_name>
+
+
 Login information
 ------------
 The puppet master is available on `https://192.168.11.3`. These login details are created by vagrant-pe_build.
