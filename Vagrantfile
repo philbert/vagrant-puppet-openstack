@@ -70,6 +70,15 @@ $add_nodes = <<SCRIPT
 /opt/puppet/bin/rake -f /opt/puppet/share/puppet-dashboard/Rakefile RAILS_ENV=production node:add[storage.localnet,,openstack::role::storage,skip]
 SCRIPT
 
+unless Vagrant.has_plugin?('oscar')
+  # Thanks to benesch for this tip https://github.com/WhoopInc/vagrant-s3auth
+  # Attempt to install the plugin if it's not present
+  system('vagrant plugin install oscar') || exit!
+
+  # Relaunch so the plugin is detected
+  exit system('vagrant', *ARGV)
+end
+
 Vagrant.configure('2') do |config|
   config.vm.box                      = 'centos-64-x64-vbox4210-nocm'
   config.vm.box_url                  = 'http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210-nocm.box'
